@@ -34,7 +34,7 @@ public class RegistJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         password = new javax.swing.JTextField();
-        regist = new javax.swing.JButton();
+        userregist = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("宋体", 1, 18));
         jLabel1.setForeground(new java.awt.Color(0, 204, 0));
@@ -50,9 +50,9 @@ public class RegistJPanel extends javax.swing.JPanel {
             }
         });
 
-        regist.setFont(new java.awt.Font("宋体", 1, 18));
-        regist.setForeground(new java.awt.Color(51, 204, 0));
-        regist.setText("Regist");
+        userregist.setFont(new java.awt.Font("宋体", 1, 18)); // NOI18N
+        userregist.setForeground(new java.awt.Color(51, 204, 0));
+        userregist.setText("Regist");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -67,11 +67,11 @@ public class RegistJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(password)
                     .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(208, Short.MAX_VALUE)
-                .addComponent(regist)
-                .addGap(41, 41, 41))
+                .addComponent(userregist)
+                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,7 +85,7 @@ public class RegistJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(regist)
+                .addComponent(userregist)
                 .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -98,7 +98,7 @@ private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     public javax.swing.JTextField password;
-    private javax.swing.JButton regist;
     public javax.swing.JTextField username;
+    public javax.swing.JButton userregist;
     // End of variables declaration//GEN-END:variables
 }

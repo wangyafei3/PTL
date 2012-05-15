@@ -27,12 +27,12 @@
                   <Component id="password" max="32767" attributes="1"/>
                   <Component id="username" alignment="0" pref="83" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace pref="95" max="32767" attributes="0"/>
+              <EmptySpace pref="87" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="208" max="32767" attributes="0"/>
-              <Component id="regist" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <Component id="userregist" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -50,7 +50,7 @@
                   <Component id="password" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="regist" min="-2" max="-2" attributes="0"/>
+              <Component id="userregist" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -92,7 +92,7 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="regist">
+    <Component class="javax.swing.JButton" name="userregist">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="&#x5b8b;&#x4f53;" size="18" style="1"/>
@@ -102,6 +102,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Regist"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

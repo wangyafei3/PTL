@@ -10,11 +10,18 @@
  */
 package main;
 
-import javax.swing.BoxLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneLayout;
+import util.PostJava;
 import sonjpanel.LoginJPanel;
+import sonjpanel.RegistJPanel;
+import util.GetJava;
 
 /**
  *
@@ -24,6 +31,8 @@ public class Index extends javax.swing.JFrame {
 
     /** Creates new form Index */
     JPanel jp = new JPanel();
+    RegistJPanel rjp = new RegistJPanel();
+    LoginJPanel ljp = new LoginJPanel();
     public Index() {
         initComponents();
     }
@@ -65,6 +74,11 @@ public class Index extends javax.swing.JFrame {
 
         Regist.setForeground(new java.awt.Color(0, 204, 0));
         Regist.setText("注册");
+        Regist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,12 +111,61 @@ public class Index extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-    LoginJPanel ljp = new LoginJPanel();
-    
+    //添加登陆面板
+        
     jScrollPane1.setLayout(new ScrollPaneLayout());
     jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     jScrollPane1.getViewport().add(ljp, null);
+    //添加登陆
+    ljp.login.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = ljp.username.getText();
+                String password = ljp.password.getText(); 
+      
+                try {                  
+                    PostJava pj = new PostJava();                   
+                    String con = "username="+username+"&"+"password="+password;
+                    pj.post("http://ptltest-bxshi.dotcloud.com/login/",con);
+//                    GetJava gj = new GetJava();
+//                    gj.getKey("http://ptltest-bxshi.dotcloud.com/login/getpublickey");
+                } catch (IOException ex) {
+                    Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
+            
+        });
+    
 }//GEN-LAST:event_LoginActionPerformed
+
+private void RegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistActionPerformed
+    //添加注册面板   
+    jScrollPane1.setLayout(new ScrollPaneLayout());
+    jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    jScrollPane1.getViewport().add(rjp, null);
+    //添加注册
+    rjp.userregist.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String username = rjp.username.getText();
+                String password = rjp.password.getText(); 
+      
+                try {                  
+                    PostJava pj = new PostJava();                   
+                    String con = "username="+username+"&"+"password="+password;
+                    pj.post("http://ptltest-bxshi.dotcloud.com/register/",con);
+                } catch (IOException ex) {
+                    Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    
+}//GEN-LAST:event_RegistActionPerformed
 
     /**
      * @param args the command line arguments
