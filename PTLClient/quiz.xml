@@ -1,0 +1,9 @@
+<root>
+    <quiz>
+        <quiz_info>
+            <type>1</type>   
+            <order>no</order>
+            <selection_number>5</selection_number>
+        </quiz_info>
+    </quiz>
+</root>

@@ -10,18 +10,24 @@
  */
 package main;
 
+import fileio.ProgressBarAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneLayout;
-import util.PostJava;
+import javax.swing.UIManager;
+import http.PostJava;
+import java.awt.Frame;
 import sonjpanel.LoginJPanel;
 import sonjpanel.RegistJPanel;
-import util.GetJava;
 
 /**
  *
@@ -35,6 +41,7 @@ public class Index extends javax.swing.JFrame {
     LoginJPanel ljp = new LoginJPanel();
     public Index() {
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/b.PNG")).getImage());    
     }
 
     /** This method is called from within the constructor to
@@ -50,6 +57,7 @@ public class Index extends javax.swing.JFrame {
         Login = new javax.swing.JButton();
         Regist = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,8 +71,8 @@ public class Index extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("欢迎使用PTL试题管理系统");
 
-        Login.setForeground(new java.awt.Color(0, 204, 0));
         Login.setText("登陆");
         Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +80,6 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
-        Regist.setForeground(new java.awt.Color(0, 204, 0));
         Regist.setText("注册");
         Regist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,31 +87,40 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("宋体", 1, 14)); // NOI18N
+        jLabel1.setText("PTL试题管理系统");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(Regist, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(Regist, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jLabel1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Regist, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -112,7 +128,6 @@ public class Index extends javax.swing.JFrame {
 
 private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
     //添加登陆面板
-        
     jScrollPane1.setLayout(new ScrollPaneLayout());
     jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     jScrollPane1.getViewport().add(ljp, null);
@@ -121,22 +136,48 @@ private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
 
             @Override
             public void actionPerformed(ActionEvent e) {
+               
+                Thread thread = new Thread(){
+                    @Override
+                    public void run(){
+                
                 String username = ljp.username.getText();
                 String password = ljp.password.getText(); 
       
-                try {                  
-                    PostJava pj = new PostJava();                   
-                    String con = "username="+username+"&"+"password="+password;
-                    pj.post("http://ptltest-bxshi.dotcloud.com/login/",con);
-//                    GetJava gj = new GetJava();
-//                    gj.getKey("http://ptltest-bxshi.dotcloud.com/login/getpublickey");
-                } catch (IOException ex) {
-                    Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                    try { 
+                        Map<String , String> map = new HashMap<String, String>();
+                        PostJava pj = new PostJava();                   
+                        String con = "username="+username+"&"+"password="+password;
+                        //连接服务器并拿取返回数据（包括cookie和返回登录状态信息）
+                        map = pj.post("http://ptltest-bxshi.dotcloud.com/login/",con);
+                        map.put("username", username);
+                        //根据登录返回信息指定操作
+                        if("LOG OK".equals(map.get("msg"))){
+                            Manager man = null;
+                            try {
+                                man = new Manager();
+                            } catch (MalformedURLException ex) {
+                                Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Exception ex) {
+                                Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            Index.this.setVisible(false);
+                            man.setVisible(true);
+                            //像下个页面传递数据
+                            man.getInfor(map);
+                        }else if("LOG ERR".equals(map.get("msg"))){
+                            JOptionPane.showConfirmDialog(null, "用户名或密码错误", "确定", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null);
+                        }else if("USR EPT".equals(map.get("msg"))) {
+                            JOptionPane.showConfirmDialog(null, "用户名或密码为空", "确定", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null);
+                        }
+                    } catch (IOException ex){
+                        Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-            
-            
-            
+              
+                };
+                 ProgressBarAction.show((Frame)null, thread, "正在登陆，请稍后！", "Result", "取消");
+            } 
         });
     
 }//GEN-LAST:event_LoginActionPerformed
@@ -154,13 +195,50 @@ private void RegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
 
                 String username = rjp.username.getText();
                 String password = rjp.password.getText(); 
-      
-                try {                  
-                    PostJava pj = new PostJava();                   
-                    String con = "username="+username+"&"+"password="+password;
-                    pj.post("http://ptltest-bxshi.dotcloud.com/register/",con);
-                } catch (IOException ex) {
-                    Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                String confirm = rjp.confirmpass.getText();
+                
+                if(password.equals(confirm)){
+                    try { 
+                        Map<String , String> map = new HashMap<String, String>();
+                        PostJava pj = new PostJava();                   
+                        String con = "username="+username+"&"+"password="+password;
+                        map = pj.post("http://ptltest-bxshi.dotcloud.com/register/",con);
+                        //根据注册返回信息执行指定操作
+                        if("REG OK".equals(map.get("msg"))){
+                            pj.post("http://ptltest-bxshi.dotcloud.com/login/",con);
+                            Manager man = null;
+                            try {
+                                man = new Manager();
+                            } catch (MalformedURLException ex) {
+                                Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Exception ex) {
+                                Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            Index.this.setVisible(false);
+                            man.setVisible(true);
+                        }else if("USR DUP".equals(map.get("msg"))){
+                            JOptionPane.showConfirmDialog(null, "该用户名已被注册，请从新输入！", "确定", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null);
+                            rjp.username.setText("");
+                            rjp.password.setText("");
+                            rjp.confirmpass.setText("");
+                        }else if("USR EPT".equals(map.get("msg"))){
+                            JOptionPane.showConfirmDialog(null, "用户名或密码为空", "确定", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null);
+                            rjp.username.setText("");
+                            rjp.password.setText("");
+                            rjp.confirmpass.setText("");
+                        }else if("USR LEN".equals(map.get("msg"))){
+                            JOptionPane.showConfirmDialog(null, "您输入用户名过长，请保证用户名不高于20！", "确定", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null);
+                            rjp.username.setText("");
+                            rjp.password.setText("");
+                            rjp.confirmpass.setText("");
+                        }      
+                    } catch (IOException ex) {
+                        Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    JOptionPane.showConfirmDialog(null, "您两次输入密码不同，请确定后重新输入！", "确定", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null);
+                    rjp.password.setText("");
+                    rjp.confirmpass.setText("");
                 }
             }
         });
@@ -170,7 +248,13 @@ private void RegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) {         
+           try {
+                UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+           } catch (Exception e) {
+                e.printStackTrace();
+           }
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -197,14 +281,19 @@ private void RegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
-                new Index().setVisible(true);
+                Index i = new Index();
+                
+                i.setVisible(true);
+                i.setLocation(480, 200);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Login;
     private javax.swing.JButton Regist;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

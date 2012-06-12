@@ -18,7 +18,6 @@ public class ReadAndWriteFile {
             oos.writeObject(object);
             oos.flush();
         } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (oos != null) {
                 oos.close();
